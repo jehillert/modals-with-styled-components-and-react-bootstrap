@@ -84,7 +84,7 @@ const BootModal = ({ handleClick }) => {
 
   return (
     <>
-      <SModal animation={false} show={true} keyboard>
+      <SModal animation={false} show={toggle} keyboard>
         <SModalHeader>Header</SModalHeader>
         <SModalBody onClick={() => setToggle(false)}>Click Me</SModalBody>
         <Modal.Footer>Footer</Modal.Footer>
