@@ -16,25 +16,35 @@ import styled from 'styled-components';
 
       1. Find the first element of the modal container that is set at 'fixed'.
          If one does not exist, make one.
-      2. Set the child of the fixed element relative to the position of the parent.
-      3. Find the position of the relevant edge of the container. The relevant edge
-         is the one you are offsetting from via "absolute" using Left, Right, Top or
-         Bottom.
-      4. Set the child for absolute.  It can now be moved relative to the fixed
-         parent container edges.  Calculate the necessary deltas to move the modal
-         where you want it to go.
+      2. Set the immediate child of that container to absolute and use offset
+         values for Left, Right, Top and Bottom that position the child where
+         desired.
+      3. To calculate the right offset values, find the position of the relevant
+         edge of the container. The relevant edge is the one that matches the
+         direction of the offset. So if using Left property, find where the
+         containers left side is.
 
-      <div class="modal-backdrop show"></div>       position: fixed; (default)
-      <div class="modal" style="display: block;">   position: fixed; (default)
+      <div class="modal-backdrop show"></div>       position: fixed; (default)    Not an anscestor --- 'absolute' will not work
+      <div class="modal dialog">                    position: fixed; (default)    First
         <div class="modal-dialog">                  position: relative (default)
-          <div class="modal-content">
+          <div class="modal-content">               position: relative (default)
             <div class="modal-header">Header</div>
             <div class="modal-body">Click Me</div>
             <div class="modal-footer">Footer</div>
           </div>
         </div>
       </div>`
-*/
+
+  The answer here turned out to be easy.  The outermost container was set to
+  'fixed' and it filled the entire screen.  All that was needed was add the value
+  to the zero wall coordinate, and the modal moves into place.
+
+  Next Time:
+    1. Set the cursor on the DOM tree in question (recursive open not necessary)
+    2. Set a filter for the desired properties.
+    3. Arrow down to get the exact order, so you know where to intervene.
+
+  */
 
 const SModal = styled(Modal)`
   .modal-backdrop.show { /* set at fixed by default */ }
@@ -61,9 +71,9 @@ const FAB = styled(Button)`
   background-color: green;
   border-radius: 50%;
   border: none;
-  height:3rem;
+  height: 48px;
   position: absolute;
-  width:3rem;
+  width: 48px;
   z-index: 1080;
   bottom: 147px;
   right: 147px;
@@ -74,24 +84,12 @@ const BootModal = ({ handleClick }) => {
 
   return (
     <>
-      <div className='my-container-class'>
-        <SModal
-          animation={false}
-          show={true}
-          keyboard
-        >
-          <SModalHeader>Header</SModalHeader>
-          <SModalBody
-            onClick={() => setToggle(false)}
-          >
-            Click Me
-          </SModalBody>
-          <Modal.Footer>Footer</Modal.Footer>
-        </SModal>
-      </div>
-      <FAB
-        onClick={() => setToggle(() => !toggle)}
-      ></FAB>
+      <SModal animation={false} show={true} keyboard>
+        <SModalHeader>Header</SModalHeader>
+        <SModalBody onClick={() => setToggle(false)}>Click Me</SModalBody>
+        <Modal.Footer>Footer</Modal.Footer>
+      </SModal>
+      <FAB onClick={() => setToggle(() => !toggle)}></FAB>
     </>
   );
 }
