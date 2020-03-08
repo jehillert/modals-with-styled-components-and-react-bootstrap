@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import RBModal from './components/bootstrap-modal';
+import StyledReactModalBuutton from './components/styled-react-modal-button';
+import theme from './theme/theme';
+import GlobalStyle from './theme/global-style';
+import { ThemeProvider } from 'styled-components';
+import { ModalProvider } from 'styled-react-modal'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <ModalProvider>
+          <StyledReactModalBuutton />
+          <RBModal />
+        </ModalProvider>
+      </ThemeProvider>
+    </>
+  )
 }
 
 export default App;

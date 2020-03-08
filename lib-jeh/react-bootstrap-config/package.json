@@ -1,5 +1,5 @@
 {
-  "name": "playground",
+  "name": "bootstrap-modal",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,17 +7,19 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.4.1",
-    "components": "^0.1.0",
-    "enzyme": "^3.11.0",
-    "path": "^0.12.7",
-    "prop-types": "^15.7.2",
+    "jss": "^10.0.4",
+    "jss-plugin-camel-case": "^10.0.4",
+    "jss-plugin-default-unit": "^10.0.4",
+    "jss-plugin-global": "^10.0.4",
+    "jss-plugin-nested": "^10.0.4",
+    "jss-plugin-props-sort": "^10.0.4",
+    "jss-plugin-rule-value-function": "^10.0.4",
+    "jss-plugin-vendor-prefixer": "^10.0.4",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0",
-    "styled": "^1.0.0",
     "styled-components": "^5.0.1",
-    "styled-icons": "^10.2.1",
     "styled-react-modal": "^2.0.0"
   },
   "scripts": {
@@ -40,9 +42,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "stylelint": "^13.2.0",
-    "stylelint-config-recommended": "^3.0.0"
   }
 }
