@@ -1,7 +1,54 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+
+const SModal = styled(Modal)`
+  .modal-backdrop.show { /* set at fixed by default */ }
+  .modal { /* set at fixed by default */ }
+  .modal-dialog {
+    bottom: 185px;
+    right: 170px;
+    position: absolute;
+  }
+  .modal-content {
+    background-color: seagreen;
+    height: 600px;
+    width: 300px;
+  }
+`;
+
+const SModalBody = styled(Modal.Body)``;
+const SModalHeader = styled(Modal.Body)``;
+
+export const FAB = styled(Button)`
+  background-color: green;
+  border-radius: 50%;
+  border: none;
+  height: 48px;
+  position: absolute;
+  width: 48px;
+  z-index: 1080;
+  bottom: 147px;
+  right: 147px;
+`;
+
+const BootModal = ({ handleClick }) => {
+  const [toggle, setToggle] = useState(false);
+
+  return (
+    <>
+      <SModal animation={false} show={toggle} keyboard>
+        <SModalHeader>Header</SModalHeader>
+        <SModalBody onClick={() => setToggle(false)}>Click Me</SModalBody>
+        <Modal.Footer>Footer</Modal.Footer>
+      </SModal>
+      <FAB onClick={() => setToggle(() => !toggle)}></FAB>
+    </>
+  );
+}
+
+export default BootModal;
 
 /*
   Need to study "portals"
@@ -45,53 +92,3 @@ import styled from 'styled-components';
     3. Arrow down to get the exact order, so you know where to intervene.
 
   */
-
-const SModal = styled(Modal)`
-  .modal-backdrop.show { /* set at fixed by default */ }
-  .modal { /* set at fixed by default */ }
-
-  .modal-dialog {
-    bottom: 185px;
-    right: 170px;
-    position: absolute;
-  }
-
-  .modal-content {
-    background-color: seagreen;
-    height: 600px;
-    width: 300px;
-  }
-`;
-
-const SModalBody = styled(Modal.Body)``;
-
-const SModalHeader = styled(Modal.Body)``;
-
-const FAB = styled(Button)`
-  background-color: green;
-  border-radius: 50%;
-  border: none;
-  height: 48px;
-  position: absolute;
-  width: 48px;
-  z-index: 1080;
-  bottom: 147px;
-  right: 147px;
-`;
-
-const BootModal = ({ handleClick }) => {
-  const [toggle, setToggle] = useState(false);
-
-  return (
-    <>
-      <SModal animation={false} show={toggle} keyboard>
-        <SModalHeader>Header</SModalHeader>
-        <SModalBody onClick={() => setToggle(false)}>Click Me</SModalBody>
-        <Modal.Footer>Footer</Modal.Footer>
-      </SModal>
-      <FAB onClick={() => setToggle(() => !toggle)}></FAB>
-    </>
-  );
-}
-
-export default BootModal;
