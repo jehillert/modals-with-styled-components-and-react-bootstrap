@@ -1,92 +1,86 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { enzymeFind } from 'styled-components/test-utils'
 import { mount, shallow } from 'enzyme'
-import BootModal, { SModal, FAB } from './bootstrap-modal'
+import BootModal from './bootstrap-modal'
 
-describe('React-Bootstrap Modal', () => {
-  let wrapper
-  let FABWrapper
-  let sModalWrapper
+let wrapper
+describe('BootModal', () => {
+  afterEach(() => { wrapper.unmount() });
 
-  afterEach(() => {
-    wrapper.unmount()
+  it('renders', () => {
+    wrapper = mount(<BootModal></BootModal>)
+    expect(wrapper.name()).toBe('BootModal')
   })
 
-  describe('BootModal', () => {
-    beforeEach(() => {
-      wrapper = mount(<BootModal></BootModal>)
-    })
-
-    it('is rendered by default', () => {
-      expect(wrapper.name()).toBe('BootModal')
-    })
+  it('renders with a styled FAB subcomponent', () => {
+    wrapper = mount(<BootModal></BootModal>)
+    expect(wrapper.find('bootstrap-modal__FAB')).toHaveLength(1)
   })
 
-  describe('FAB', () => {
-    beforeEach(() => {
-      wrapper = mount(<BootModal></BootModal>)
-      FABWrapper = mount(<FAB />)
-    })
-
-    it('is rendered by default', () => {
-      expect(wrapper.find('bootstrap-modal__FAB')).toHaveLength(1)
-    })
-
-    it('matches the snapshot', () => {
-      expect(FABWrapper.find('bootstrap-modal__FAB')).toMatchInlineSnapshot(
-        `ReactWrapper {}`
-      )
-    })
-
-    // it('it calls setToggle() click handler', () => {});
-    // it('renders a modal when clicked', () => {/* domNode.length === 1 */});
-    // it('does not change position when the modal is toggled', () => {});
-    // test('whether the button is accessible when the modal is visible', () => {});
+  it('renders with a styled modal subcomponent', () => {
+    wrapper = shallow(<BootModal></BootModal>)
+    expect(wrapper.find('bootstrap-modal__SModal')).toHaveLength(1)
   })
 
-  describe('Modal', () => {
-    beforeEach(() => {
-      wrapper = shallow(<BootModal></BootModal>)
-    })
+  it('hides the modal subcomponent by default', () => {
+    wrapper = shallow(<BootModal></BootModal>)
+    expect(wrapper.find('bootstrap-modal__SModal').prop('show')).toBe(false);
+  });
 
-    it('is not visible by default', () => {
-      expect(wrapper.find('bootstrap-modal__SModal')).toHaveLength(1)
-    })
-
-    //it('it matches the snapshot when clicked', () => {});
-    //it('it has a body element rendered as a button', () => {});
-    //test('whether clicking the body calls setToggle() handler', () => {});
+  it('unhides the modal subcomponent when FAB is clicked', () => {
+    wrapper = mount(<BootModal></BootModal>)
+    wrapper.find('bootstrap-modal__FAB').simulate('click')
+    expect(wrapper.find('bootstrap-modal__SModal').prop('show')).toBe(true)
   })
+
+  it('contains a FAB matching the inline snapshot', () => {
+    wrapper = mount(<BootModal></BootModal>)
+    expect(wrapper.find('bootstrap-modal__FAB')).toMatchInlineSnapshot(`
+      <bootstrap-modal__FAB
+        onClick={[Function]}
+      >
+        <Button
+          active={false}
+          className="bootstrap-modal__FAB-sc-1we8kp5-3 ccRgQu"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+          variant="primary"
+        >
+          <button
+            className="bootstrap-modal__FAB-sc-1we8kp5-3 ccRgQu btn btn-primary"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
+          />
+        </Button>
+      </bootstrap-modal__FAB>
+    `)
+  })
+
+  it('contains a modal subcomponent matching the inline snapshot', () => {
+    wrapper = shallow(<BootModal></BootModal>)
+    expect(wrapper.find('bootstrap-modal__SModal')).toMatchInlineSnapshot(`
+      <bootstrap-modal__SModal
+        animation={false}
+        keyboard={true}
+        show={false}
+      >
+        <bootstrap-modal__SModalHeader>
+          Header
+        </bootstrap-modal__SModalHeader>
+        <bootstrap-modal__SModalBody
+          onClick={[Function]}
+        >
+          Click Me
+        </bootstrap-modal__SModalBody>
+        <ModalFooter>
+          Footer
+        </ModalFooter>
+      </bootstrap-modal__SModal>
+    `)
+  })
+
+  // it('does not move', () => {})
+
 })
-
-/*
-WORKING SOLUTIONS
-  1. using the babel-macro via 'styled-components/macro' import.
-     https://styled-components.com/docs/tooling#babel-macro
-
-  import styled from 'styled-components/macro';
-    instead of
-  import styled from 'styled-components/';
-
-  Now you can search directly for displayname:
-    expect(wrapper.find('bootstrap-modal__FAB')).toHaveLength(1);
-
-
-import Foo from '../components/Foo';
-
-COMPONENT CONSTRUCTORS
-const wrapper = mount(<MyComponent />);
-expect(wrapper.find(Foo)).to.have.lengthOf(1);
-
-DISPLAY NAME
-const wrapper = mount(<MyComponent />);
-expect(wrapper.find('Foo')).to.have.lengthOf(1)
-
-
-STILL TO CHECK OUT
-Anyway, I was able to replicate the same problem, however, there are two workarounds:
-
-Instead of using shallow, you can mount the component and then assert: expect(wrapper.find("StyledComponent > ul")).toHaveLength(1);.
-Instead of mounting the component, you can import StyledList from 'path/to/styledList'; and then assert: expect(wrapper.find(StyledList)).toHaveLength(1)
-*/

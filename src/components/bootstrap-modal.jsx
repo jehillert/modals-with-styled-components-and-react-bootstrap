@@ -21,7 +21,7 @@ const SModal = styled(Modal)`
 const SModalBody = styled(Modal.Body)``;
 const SModalHeader = styled(Modal.Body)``;
 
-export const FAB = styled(Button)`
+const FAB = styled(Button)`
   background-color: green;
   border-radius: 50%;
   border: none;
